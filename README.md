@@ -1,6 +1,6 @@
-# Examples
+# Nitro Examples
 
-This is a repository for micro examples. Feel free to contribute.
+This is a repository for Nitro examples. Feel free to contribute.
 
 ## Contents
 
