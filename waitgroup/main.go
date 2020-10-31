@@ -1,12 +1,13 @@
 package main
 
 import (
+	"context"
 	"fmt"
 	"sync"
 
-	"context"
-	"github.com/micro/go-micro/v2"
-	"github.com/micro/go-micro/v2/server"
+	"github.com/asim/nitro/v3/server"
+	"github.com/asim/nitro/v3/service"
+	"github.com/asim/nitro/v3/service/mucp"
 )
 
 // waitgroup is a handler wrapper which adds a handler to a sync.WaitGroup
@@ -23,11 +24,11 @@ func waitgroup(wg *sync.WaitGroup) server.HandlerWrapper {
 func main() {
 	var wg sync.WaitGroup
 
-	service := micro.NewService(
+	service := mucp.NewService(
 		// wrap handlers with waitgroup wrapper
-		micro.WrapHandler(waitgroup(&wg)),
+		service.WrapHandler(waitgroup(&wg)),
 		// waits for the waitgroup once stopped
-		micro.AfterStop(func() error {
+		service.AfterStop(func() error {
 			// wait for handlers to finish
 			wg.Wait()
 			return nil

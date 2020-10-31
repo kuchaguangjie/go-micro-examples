@@ -3,14 +3,14 @@ package main
 import (
 	"log"
 
-	"github.com/micro/examples/server/handler"
-	"github.com/micro/examples/server/subscriber"
-	"github.com/micro/go-micro/v2/server"
+	"github.com/asim/nitro-examples/server/handler"
+	"github.com/asim/nitro/v3/server"
+	"github.com/asim/nitro/v3/server/mucp"
 )
 
 func main() {
 	// Initialise Server
-	server.Init(
+	server := mucp.NewServer(
 		server.Name("go.micro.srv.example"),
 	)
 
@@ -21,27 +21,10 @@ func main() {
 		),
 	)
 
-	// Register Subscribers
-	if err := server.Subscribe(
-		server.NewSubscriber(
-			"topic.example",
-			new(subscriber.Example),
-		),
-	); err != nil {
-		log.Fatal(err)
-	}
-
-	if err := server.Subscribe(
-		server.NewSubscriber(
-			"topic.example",
-			subscriber.Handler,
-		),
-	); err != nil {
-		log.Fatal(err)
-	}
-
 	// Run server
-	if err := server.Run(); err != nil {
+	if err := server.Start(); err != nil {
 		log.Fatal(err)
 	}
+
+	select {}
 }

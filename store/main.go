@@ -3,22 +3,26 @@ package main
 import (
 	"time"
 
-	"github.com/micro/go-micro/v2"
-	"github.com/micro/go-micro/v2/logger"
-	"github.com/micro/go-micro/v2/store"
+	"github.com/asim/nitro/v3/logger"
+	"github.com/asim/nitro/v3/service"
+	"github.com/asim/nitro/v3/service/mucp"
+	"github.com/asim/nitro/v3/store"
+	"github.com/asim/nitro/v3/store/memory"
 )
 
 func main() {
-	service := micro.NewService(
-		micro.Name("go.micro.service.store-test"),
-		micro.Version("latest"),
+	service := mucp.NewService(
+		service.Name("go.micro.service.store-test"),
+		service.Version("latest"),
 	)
 
 	service.Init()
 
+	st := memory.NewStore()
+
 	// write to the store
 	record := &store.Record{Key: "foo", Value: []byte("bar")}
-	if err := service.Options().Store.Write(record); err != nil {
+	if err := st.Write(record); err != nil {
 		logger.Fatalf("Error writing to the store: %v", err)
 	}
 	logger.Infof("Wrote value to the store")
@@ -30,7 +34,7 @@ func main() {
 		for {
 			<-ticker.C
 
-			recs, err := service.Options().Store.Read("foo")
+			recs, err := st.Read("foo")
 			if err != nil {
 				logger.Errorf("Error reading from store: %v", err)
 				continue

@@ -1,18 +1,19 @@
 package main
 
 import (
-	"github.com/micro/examples/helloworld/handler"
-	"github.com/micro/go-micro/v2"
-	"github.com/micro/go-micro/v2/logger"
+	"github.com/asim/nitro-examples/helloworld/handler"
+	"github.com/asim/nitro/v3/logger"
+	"github.com/asim/nitro/v3/service"
+	"github.com/asim/nitro/v3/service/mucp"
 
-	pb "github.com/micro/examples/helloworld/proto"
+	pb "github.com/asim/nitro-examples/helloworld/proto"
 )
 
 func main() {
 	// New Service
-	helloworld := micro.NewService(
-		micro.Name("helloworld"),
-		micro.Version("latest"),
+	helloworld := mucp.NewService(
+		service.Name("helloworld"),
+		service.Version("latest"),
 	)
 
 	// Initialise service

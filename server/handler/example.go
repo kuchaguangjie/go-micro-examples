@@ -3,9 +3,9 @@ package handler
 import (
 	"log"
 
-	example "github.com/micro/examples/server/proto/example"
-	"github.com/micro/go-micro/v2/metadata"
-	"github.com/micro/go-micro/v2/server"
+	example "github.com/asim/nitro-examples/server/proto/example"
+	"github.com/asim/nitro/v3/metadata"
+	"github.com/asim/nitro/v3/server"
 
 	"context"
 )
@@ -15,7 +15,7 @@ type Example struct{}
 func (e *Example) Call(ctx context.Context, req *example.Request, rsp *example.Response) error {
 	md, _ := metadata.FromContext(ctx)
 	log.Printf("Received Example.Call request with metadata: %v", md)
-	rsp.Msg = server.DefaultOptions().Id + ": Hello " + req.Name
+	rsp.Msg = ": Hello " + req.Name
 	return nil
 }
 

@@ -5,13 +5,13 @@ import (
 	"log"
 	"time"
 
-	"github.com/micro/go-micro/v2/broker"
-	// To enable rabbitmq plugin uncomment
-	//_ "github.com/micro/go-plugins/broker/rabbitmq"
+	"github.com/asim/nitro/v3/broker"
+	"github.com/asim/nitro/v3/broker/memory"
 )
 
 var (
 	topic = "go.micro.topic.foo"
+	b     = memory.NewBroker()
 )
 
 func pub() {
@@ -24,7 +24,7 @@ func pub() {
 			},
 			Body: []byte(fmt.Sprintf("%d: %s", i, time.Now().String())),
 		}
-		if err := broker.Publish(topic, msg); err != nil {
+		if err := b.Publish(topic, msg); err != nil {
 			log.Printf("[pub] failed: %v", err)
 		} else {
 			fmt.Println("[pub] pubbed message:", string(msg.Body))
@@ -34,11 +34,11 @@ func pub() {
 }
 
 func main() {
-	if err := broker.Init(); err != nil {
+	if err := b.Init(); err != nil {
 		log.Fatalf("Broker Init error: %v", err)
 	}
 
-	if err := broker.Connect(); err != nil {
+	if err := b.Connect(); err != nil {
 		log.Fatalf("Broker Connect error: %v", err)
 	}
 

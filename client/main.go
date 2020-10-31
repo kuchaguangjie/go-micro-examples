@@ -4,25 +4,11 @@ import (
 	"fmt"
 
 	"context"
-	example "github.com/micro/examples/server/proto/example"
-	"github.com/micro/go-micro/v2"
-	"github.com/micro/go-micro/v2/client"
-	"github.com/micro/go-micro/v2/metadata"
+	example "github.com/asim/nitro-examples/server/proto/example"
+	"github.com/asim/nitro/v3/client"
+	"github.com/asim/nitro/v3/client/mucp"
+	"github.com/asim/nitro/v3/metadata"
 )
-
-// publishes a message
-func pub(p micro.Publisher) {
-	msg := &example.Message{
-		Say: "This is an async message",
-	}
-
-	if err := p.Publish(context.TODO(), msg); err != nil {
-		fmt.Println("pub err: ", err)
-		return
-	}
-
-	fmt.Printf("Published: %v\n", msg)
-}
 
 func call(i int, c client.Client) {
 	// Create new request to service go.micro.srv.example, method Example.Call
@@ -117,23 +103,17 @@ func pingPong(i int, c client.Client) {
 }
 
 func main() {
-	service := micro.NewService()
-	service.Init()
-
-	p := micro.NewPublisher("topic.example", service.Client())
-
-	fmt.Println("\n--- Publisher example ---")
-	pub(p)
+	c := mucp.NewClient()
 
 	fmt.Println("\n--- Call example ---")
 	for i := 0; i < 10; i++ {
-		call(i, service.Client())
+		call(i, c)
 	}
 
 	fmt.Println("\n--- Streamer example ---")
-	stream(10, service.Client())
+	stream(10, c)
 
 	fmt.Println("\n--- Ping Pong example ---")
-	pingPong(10, service.Client())
+	pingPong(10, c)
 
 }

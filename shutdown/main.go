@@ -1,11 +1,12 @@
 package main
 
 import (
+	"context"
 	"log"
 	"time"
 
-	"context"
-	"github.com/micro/go-micro/v2"
+	"github.com/asim/nitro/v3/service"
+	"github.com/asim/nitro/v3/service/mucp"
 )
 
 func main() {
@@ -20,9 +21,9 @@ func main() {
 	}()
 
 	// create service
-	service := micro.NewService(
+	service := mucp.NewService(
 		// with our cancellation context
-		micro.Context(ctx),
+		service.Context(ctx),
 	)
 
 	// init service

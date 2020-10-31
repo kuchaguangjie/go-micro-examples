@@ -1,20 +1,16 @@
 package main
 
 import (
-	"fmt"
-
-	"github.com/micro/go-micro/v2"
-	"github.com/micro/go-micro/v2/server"
+	"github.com/asim/nitro/v3/server"
+	"github.com/asim/nitro/v3/server/mucp"
 )
 
 func main() {
-	service := micro.NewService()
-
-	service.Server().Init(
+	srv := mucp.NewServer(
 		server.Wait(nil),
 	)
 
-	if err := service.Run(); err != nil {
-		fmt.Println(err)
-	}
+	srv.Start()
+
+	select {}
 }

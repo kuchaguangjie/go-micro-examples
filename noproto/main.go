@@ -3,7 +3,8 @@ package main
 import (
 	"context"
 
-	"github.com/micro/go-micro/v2"
+	"github.com/asim/nitro/v3/service"
+	"github.com/asim/nitro/v3/service/mucp"
 )
 
 type Greeter struct{}
@@ -15,15 +16,14 @@ func (g *Greeter) Hello(ctx context.Context, name *string, msg *string) error {
 
 func main() {
 	// create new service
-	service := micro.NewService(
-		micro.Name("greeter"),
+	service := mucp.NewService(
+		service.Name("greeter"),
 	)
 
-	// initialise command line
-	service.Init()
-
 	// set the handler
-	micro.RegisterHandler(service.Server(), new(Greeter))
+	service.Server().Handle(
+		service.Server().NewHandler(new(Greeter)),
+	)
 
 	// run service
 	service.Run()

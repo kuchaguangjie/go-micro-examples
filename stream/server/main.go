@@ -6,8 +6,9 @@ import (
 	"io"
 	"log"
 
-	proto "github.com/micro/examples/stream/server/proto"
-	"github.com/micro/go-micro/v2"
+	proto "github.com/asim/nitro-examples/stream/server/proto"
+	"github.com/asim/nitro/v3/service"
+	"github.com/asim/nitro/v3/service/mucp"
 )
 
 type Streamer struct{}
@@ -44,8 +45,8 @@ func (e *Streamer) Stream(ctx context.Context, stream proto.Streamer_StreamStrea
 
 func main() {
 	// new service
-	service := micro.NewService(
-		micro.Name("go.micro.srv.stream"),
+	service := mucp.NewService(
+		service.Name("go.micro.srv.stream"),
 	)
 
 	// Init command line

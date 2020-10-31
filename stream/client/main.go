@@ -5,8 +5,8 @@ import (
 	"time"
 
 	"context"
-	proto "github.com/micro/examples/stream/server/proto"
-	"github.com/micro/go-micro/v2"
+	proto "github.com/asim/nitro-examples/stream/server/proto"
+	"github.com/asim/nitro/v3/service/mucp"
 )
 
 func bidirectional(cl proto.StreamerService) {
@@ -72,7 +72,7 @@ func serverStream(cl proto.StreamerService) {
 }
 
 func main() {
-	service := micro.NewService()
+	service := mucp.NewService()
 	service.Init()
 
 	// create client

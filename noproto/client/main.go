@@ -4,14 +4,12 @@ import (
 	"context"
 	"fmt"
 
-	"github.com/micro/go-micro/v2"
-	"github.com/micro/go-micro/v2/client"
+	"github.com/asim/nitro/v3/client"
+	"github.com/asim/nitro/v3/client/mucp"
 )
 
 func main() {
-	service := micro.NewService()
-	service.Init()
-	c := service.Client()
+	c := mucp.NewClient()
 
 	request := c.NewRequest("greeter", "Greeter.Hello", "john", client.WithContentType("application/json"))
 	var response string
