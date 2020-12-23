@@ -3,6 +3,8 @@ package main
 
 import (
     "context"
+    "github.com/micro/go-micro/v2/registry"
+    "github.com/micro/go-micro/v2/registry/etcd"
     "time"
 
     hello "github.com/micro/examples/greeter/srv/proto/hello"
@@ -29,6 +31,7 @@ func main() {
 
     service := micro.NewService(
         micro.Name("go.micro.srv.greeter"),
+        micro.Registry(etcd.NewRegistry(registry.Addrs("127.0.0.1:2379"))),
     )
 
     // optionally setup command line usage
