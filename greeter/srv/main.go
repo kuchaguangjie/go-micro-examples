@@ -3,14 +3,11 @@ package main
 
 import (
     "context"
-    "github.com/micro/go-micro/v2/registry"
-    "github.com/micro/go-micro/v2/registry/etcd"
-    "time"
-
     hello "github.com/micro/examples/greeter/srv/proto/hello"
     "github.com/micro/go-micro/v2"
+    "github.com/micro/go-micro/v2/registry"
+    "github.com/micro/go-micro/v2/registry/etcd"
     "github.com/micro/go-micro/v2/util/log"
-    "google.golang.org/grpc"
 )
 
 type Say struct{}
@@ -22,13 +19,6 @@ func (s *Say) Hello(ctx context.Context, req *hello.Request, rsp *hello.Response
 }
 
 func main() {
-    go func() {
-        for {
-            grpc.DialContext(context.TODO(), "127.0.0.1:9091")
-            time.Sleep(time.Second)
-        }
-    }()
-
     service := micro.NewService(
         micro.Name("go.micro.srv.greeter"),
         micro.Registry(etcd.NewRegistry(registry.Addrs("127.0.0.1:2379"))),
